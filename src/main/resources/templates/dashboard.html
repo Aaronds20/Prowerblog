@@ -1,21 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<title>PowerBlog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>PowerBlog</title>
 </head>
+
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
-    <h1>Welcome, <span th:text="${username}"></span></h1>
-<div th:replace="~{fragments/footer :: footer}"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <div class="container card" th:object="${User}">
+        <h4 th:text="${User.firstName} + ${User.lastName}">Name</h4>
+        <h4 th:text="${User.username}">username</h4>
+        <h4 th:text="${User.email}">Email</h4>
+    </div>
+    <h2 class="text-warning">Your Posts</h2>
+    <hr>
+    <div class="card border" th:each="posts : ${Posts}">
+        <h1 th:text="${posts.title}">Title</h1>
+        <p th:text="'Created: ' + ${#dates.format(posts.createDate, 'dd-MMM-yyyy')} + ' by '">Created by
+        <p th:text="${posts.user.username}">User</p>
+        </p>
+        <h2><a th:href="@{'/getfullpost/' + ${posts.id}}">Read more...</a></h2>
+        <br><br>
+        <div sec:authorize="isAuthenticated()" th:if="${posts.user.username}">
+            <a th:href="@{'/editpost/{id}'(id=${posts.id})}" class="col-md-2">
+                <button type="button" class="btn btn-success btn-block" th:text="Edit">Edit</button>
+            </a>
+            <form action="#" th:action="@{'/deletepost/{id}'(id=${posts.id})}" method="POST"
+                class="form-horizontal">
+                <div class="form-group">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button type="submit" class="btn btn-danger btn-block" th:text="Delete">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>

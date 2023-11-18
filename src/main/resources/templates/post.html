@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<title>ProwerBlog</title>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+        <div class="card border" th:object="${fullpost}">
+            <h4 th:text="${fullpost.title}">Title</h4>
+    <p th:text="'Created: ' + ${#dates.format(fullpost.createDate, 'dd-MMM-yyyy')} + ' by '">Created by<p th:text="${fullpost.user.username}">User</p></p>
+    <h5 th:text="${fullpost.body}">Body</h5>
+            <br><br>
+        </div>
+    </div>
+</div>
+
+<h2>Comments:</h2>
+
+<!--Comments-->
+<div class="well" th:each="comment : ${fullpost.comments}">
+    <h3 th:text="${comment.body}">Body</h3>
+    <div th:text="'Created: ' + ${#dates.format(comment.createDate, 'dd-MMM-yyyy')} + ' by '">
+        Created by
+    </div>
+    <div><a th:text="${comment.user.username}">User</a>
+    </div>
+</div>
+
+<!--Leave a comment button-->
+<!--Only if authenticated-->
+<div sec:authorize="isAuthenticated()">
+    <div class="row">
+        <a th:href="@{'/comment/{id}'(id=${fullpost.id})}" class="col-md-2">
+            <button type="button" class="btn btn-primary btn-block" th:text="Comment">Comment</button>
+        </a>
+    </div>
+</div>
+</div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>

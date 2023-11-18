@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.prowerblog.prowerblog.Model.Post;
+import com.prowerblog.prowerblog.Model.User;
 import com.prowerblog.prowerblog.Repository.PostRepository;
 
 @Service
@@ -33,8 +34,12 @@ public class PostService {
         return postRepository.saveAndFlush(post);
     }
 
-    public void delete(Post post) {
-        postRepository.delete(post);
+    public void delete(Post userpost) {
+        postRepository.delete(userpost);
     }
 
+    public List<Post> findByUserOrderedByDate(User user){
+         List<Post> posts = postRepository.findByUserOrderByCreateDateDesc(user);
+         return posts;
+    }
 }
