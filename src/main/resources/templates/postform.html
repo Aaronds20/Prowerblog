@@ -1,66 +1,81 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="Description" content="Enter your description here" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <title>PowerBlog</title>
 </head>
+
 <body>
 
     <div th:replace="~{fragments/header :: header}"></div>
 
-<div class="container">
-
     <div class="container">
-
-        <!--Show this info message only if posted successfully-->
-        <div class="alert alert-info" th:if="${successMessage}" th:utext="${successMessage}"></div>
-
-        <!--New Post Form-->
-        <div class="row" style="margin-top:20px">
-            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                <form autocomplete="off" action="#" th:action="@{/addpost}"
-                      th:object="${post}" method="post" class="form-horizontal"
-                      role="form">
-
-                    <h2 class="text-center">Write new post</h2>
-
-                    <div class="form-group">
-                        <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
-                               class="alert alert-danger"></label>
-                        <input type="text" th:field="*{title}" placeholder="Title"
-                               class="form-control input-lg"/>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center">Publish New Post</h1>
                     </div>
+                    <div class="card-body">
+                        <form autocomplete="off" action="#" th:action="@{/addpost}" th:object="${post}" method="post"
+                            class="form-horizontal" role="form">
 
-                    <div class="form-group">
-                        <label th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
-                               class="alert alert-danger"></label>
-                        <textarea th:field="*{body}" placeholder="Body"
-                                  class="form-control input-lg"></textarea>
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" aria-describedby="emailHelp"
+                                    placeholder="Enter Title for post" name="title"
+                                    th:classappend="${#fields.hasErrors('title')?'is-invalid':''}">
+                                <div th:each="error : ${#fields.errors('title')}" class="invalid-feedback">
+                                    <span th:text="${error}"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="body">Content</label>
+                                <textarea class="form-control" id="body" aria-describedby="emailHelp"
+                                    placeholder="Enter Content for post" name="body"
+                                    th:classappend="${#fields.hasErrors('body')?'is-invalid':''}"></textarea>
+                                <div th:each="error : ${#fields.errors('body')}" class="invalid-feedback">
+                                    <span th:text="${error}"></span>
+                                </div>
+                            </div>
+
+                            <input type="hidden" th:field="*{user}" />
+                            <input type="hidden" th:field="*{id}" />
+
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary btn-block" value="Save" />
+                            </div>
+
+                        </form>
                     </div>
-
-                    <input type="hidden" th:field="*{user}"/>
-                    <input type="hidden" th:field="*{id}"/>
-
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary btn-block" value="Save"/>
-                    </div>
-
-                </form>
+                </div>
             </div>
         </div>
-</div>
-</div>
 
-<!-- /.container -->
-<div th:replace="~{fragments/footer :: footer}"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-
+        <!-- /.container -->
+        <div th:replace="~{fragments/footer :: footer}"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/bs-init.js"></script>
+        <script src="assets/js/clean-blog.js"></script>
 </body>
+
 </html>

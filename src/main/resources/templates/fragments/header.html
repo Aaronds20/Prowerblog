@@ -2,50 +2,47 @@
 <html lang="en"  xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<title>PowerBlog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <title>PowerBlog</title>
 </head>
-    <body>
-        <div th:fragment="header">
-            <!-- this is header -->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container">
-                    <div class="navbar-brand">
-                        <a class="navbar-brand" th:href="@{/}">ProwerBlog</a>
-                    </div>
-                    <div id="navbar" class="collapse navbar-collapse navbar-right">
-                        <!-- show registration only if user is not yet authenticated -->
-                        <ul class="nav navbar-nav" sec:authorize="!isAuthenticated()">
-                            <li class="active"><a href="#" th:href="@{/signup}">SignUp</a></li>
-                        </ul>
-                        <!-- show login only if user is not yet authenticated -->
-                        <ul class="nav navbar-nav" sec:authorize="!isAuthenticated()">
-                            <li class="active"><a href="#" th:href="@{/login}">Login</a></li>
-                        </ul>
-                        <!-- show My Blog only if user is authenticated -->
-                        <ul class="nav navbar-nav" sec:authorize="hasRole('USER')">
-                            <li class="active"><a href="#" th:href="@{'/dashboard/' + ${#authentication.getName()}}">My Blog</a></li>
-                        </ul>
-                        <!-- show new post only if user is authenticated -->
-                        <ul class="nav navbar-nav" sec:authorize="hasRole('USER')">
-                            <li class="active"><a href="#" th:href="@{/addpost}">New Post</a></li>
-                        </ul>
-                        <!-- show sign out only if user is authenticated -->
-                        <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-                            <li class="active"><a href="#" th:href="@{/logout}">Sign Out</a></li>
-                        </ul>
-                    </div>
-                </div>
+<body>
+    <div th:fragment="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/}">ProwerBlog</a>
+                <div class="collapse navbar-collapse navbar-right" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto" sec:authorize="!isAuthenticated()">
+                        <li class="nav-item"><a class="nav-link" href="#" th:href="@{/login}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" th:href="@{/signup}">Signup</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto" sec:authorize="hasRole('USER')">
+                        <li class="nav-item"><a class="nav-link" href="#" th:href="@{'/dashboard/' + ${#authentication.getName()}}">My Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" th:href="@{/addpost}">New Post</a></li>
+                    </ul>
+                    <ul class="navbar-nav" sec:authorize="isAuthenticated()">
+                        <li class="nav-item"><a class="nav-link" href="#" th:href="@{/logout}">Sign Out</a></li>
+                    </ul>
+                </div>                     
             </nav>
         </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-</body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/bs-init.js"></script>
+        <script src="assets/js/clean-blog.js"></script>
 </html>

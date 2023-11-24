@@ -1,30 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<title>PowerBlog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <title>PowerBlog</title>
 </head>
+
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
-    <br>
-    <h1 class="text-success">Recent Articles</h1>
-    <hr>
+    <header class="masthead" style="background-image:url('assets/img/home-bg.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-7 mx-auto">
+                    <div class="site-heading">
+                        <h1>ProwerBlog</h1><span class="subheading">A Blog Theme by Start Bootstrap</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <h1 style="color: var(--green);font-size: 40px;text-decoration: underline;">Recent Articles</h1>
     <div class="container">
-    <div class="card border" th:each="posts : ${Posts}">
-        <h1 th:text="${posts.title}">Title</h1>
-<p th:text="'Created: ' + ${#dates.format(posts.createDate, 'dd-MMM-yyyy')} + ' by '">Created by<p th:text="${posts.user.username}">User</p></p>
-<h2><a th:href="@{'/getfullpost/' + ${posts.id}}">Read more...</a></h2>
-        <br><br>
+        <div class="row" th:each="posts : ${Posts}">
+            <div class="col-md-10 col-lg-8" data-bss-hover-animate="pulse">
+                <div class="post-preview">
+                    <h2 class="post-title" th:text="${posts.title}">Title</h2>
+                    <p class="post-meta"
+                        th:text="${'Posted by ' + posts.user.username + ' on ' + #dates.format(posts.createDate, 'dd-MMM-yyyy')}">
+                        Posted by Start Bootstrap on September 24, 2018</p>
+                </div><a
+                    class="font-weight-bold text-justify text-sm-center text-md-center text-lg-center text-xl-center text-primary"
+                    href="#" th:href="@{'/getfullpost/' + ${posts.id}}">Read More...</a>
+                <hr><span></span>
+                <div class="post-preview"></div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
     </div>
-</div>
+    </div>
     <div th:replace="~{fragments/footer :: footer}"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/clean-blog.js"></script>
 </body>
+
 </html>

@@ -40,9 +40,9 @@ public class SignUpController {
             userService.signup(user);
             model.addAttribute("successMessage", "User has been registered successfully");
             model.addAttribute("user", new User());
+             return "login";
         }else{
             return "signup";
-        }   
-        return "login";
+        } 
         }
     }

@@ -1,51 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<title>ProwerBlog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Blog Post - ProwerBlog</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/Lora.css">
+    <link rel="stylesheet" href="/assets/css/Open%20Sans.css">
+    <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 </head>
+
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
-        <div class="card border" th:object="${fullpost}">
-            <h4 th:text="${fullpost.title}">Title</h4>
-    <p th:text="'Created: ' + ${#dates.format(fullpost.createDate, 'dd-MMM-yyyy')} + ' by '">Created by<p th:text="${fullpost.user.username}">User</p></p>
-    <h5 th:text="${fullpost.body}">Body</h5>
-            <br><br>
+    <div th:object="${fullpost}">
+    <header class="masthead" style="background-image:url('/assets/img/post-bg.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto">
+                    <div class="post-heading">
+                        <h1 th:text="${fullpost.title}">Title</h1>
+                        <h2 class="subheading"  th:text="${'Posted by ' + fullpost.user.username + ' on ' + #dates.format(fullpost.createDate, 'dd-MMM-yyyy')}"> Time</h2>
+                    </div>
+                </div>
+            </div>
         </div>
+    </header>
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto">
+                    <p th:text="${fullpost.body}">
+                        Body
+                    </p>
+                    <div class="row" style="text-align: right;">
+                        <div class="col"><button class="btn text-capitalize text-right text-light" type="button" style="font-size: 15px;background: var(--blue);border-radius: 20px;"><i class="fas fa-plus"></i>&nbsp;Add New Comment</button></div>
+                    </div>
+                    <h2 class="section-heading" style="color: #444f51;">Comments:</h2>
+                    <div class="row" th:each="comment : ${fullpost.comments}">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text" th:text="${comment.body}">Body</p>
+                                    <b>
+                                        <p class="card-text"
+                                            th:text="${'Created by ' + comment.user.username + ' on ' + #dates.format(comment.createDate, 'dd-MMM-yyyy')}">
+                                            Date</p>
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="text-align: right;" sec:authorize="isAuthenticated()">
+                        <a th:href="@{'/comment/{id}'(id=${fullpost.id})}" class="col-md-2">
+                            <button type="button" class="btn text-capitalize text-right text-light" style="font-size: 15px;background: var(--blue);border-radius: 20px;"><i class="fas fa-plus"></i>  Add New Comment</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
     </div>
-</div>
-
-<h2>Comments:</h2>
-
-<!--Comments-->
-<div class="well" th:each="comment : ${fullpost.comments}">
-    <h3 th:text="${comment.body}">Body</h3>
-    <div th:text="'Created: ' + ${#dates.format(comment.createDate, 'dd-MMM-yyyy')} + ' by '">
-        Created by
-    </div>
-    <div><a th:text="${comment.user.username}">User</a>
-    </div>
-</div>
-
-<!--Leave a comment button-->
-<!--Only if authenticated-->
-<div sec:authorize="isAuthenticated()">
-    <div class="row">
-        <a th:href="@{'/comment/{id}'(id=${fullpost.id})}" class="col-md-2">
-            <button type="button" class="btn btn-primary btn-block" th:text="Comment">Comment</button>
-        </a>
-    </div>
-</div>
-</div>
     <div th:replace="~{fragments/footer :: footer}"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bs-init.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
 </body>
+
 </html>
