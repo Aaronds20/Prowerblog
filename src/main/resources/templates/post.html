@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
+    <title>PowerBlog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Blog Post - ProwerBlog</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/Lora.css">
     <link rel="stylesheet" href="/assets/css/Open%20Sans.css">
@@ -12,12 +13,19 @@
     <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
 </head>
 
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
-    <div th:object="${fullpost}">
-    <header class="masthead" style="background-image:url('/assets/img/post-bg.jpg');">
+    <div th:object="${fullpost}"></div>
+    <header class="masthead" style="background-image:url('/assets/img/posts-bg.jpg');">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -36,10 +44,14 @@
                 <div class="col-md-10 col-lg-8 mx-auto">
                     <p th:text="${fullpost.body}">
                         Body
-                    </p>
-                    <div class="row" style="text-align: right;">
-                        <div class="col"><button class="btn text-capitalize text-right text-light" type="button" style="font-size: 15px;background: var(--blue);border-radius: 20px;"><i class="fas fa-plus"></i>&nbsp;Add New Comment</button></div>
-                    </div>
+                </p>
+                <div class="row" style="text-align: right;" sec:authorize="isAuthenticated()">
+                    <div class="col">
+                    <a th:href="@{'/comment/{id}'(id=${fullpost.id})}" class="col-md-2 ml-auto">
+                        <button type="button" class="btn text-capitalize text-right text-light" style="font-size: 15px;background: var(--blue);border-radius: 20px;"><i class="fas fa-plus"></i>  Add New Comment</button>
+                    </a>
+                </div>   
+            </div>             
                     <h2 class="section-heading" style="color: #444f51;">Comments:</h2>
                     <div class="row" th:each="comment : ${fullpost.comments}">
                         <div class="col">
@@ -47,24 +59,17 @@
                                 <div class="card-body">
                                     <p class="card-text" th:text="${comment.body}">Body</p>
                                     <b>
-                                        <p class="card-text"
-                                            th:text="${'Created by ' + comment.user.username + ' on ' + #dates.format(comment.createDate, 'dd-MMM-yyyy')}">
+                                    <p class="card-text"
+                            th:text="${'Created by ' + comment.user.username + ' on ' + #dates.format(comment.createDate, 'dd-MMM-yyyy')}">
                                             Date</p>
                                     </b>
                                 </div>
-                            </div>
                         </div>
-                    </div>
-                    <div class="row" style="text-align: right;" sec:authorize="isAuthenticated()">
-                        <a th:href="@{'/comment/{id}'(id=${fullpost.id})}" class="col-md-2">
-                            <button type="button" class="btn text-capitalize text-right text-light" style="font-size: 15px;background: var(--blue);border-radius: 20px;"><i class="fas fa-plus"></i>  Add New Comment</button>
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </article>
-    </div>
     <div th:replace="~{fragments/footer :: footer}"></div>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
