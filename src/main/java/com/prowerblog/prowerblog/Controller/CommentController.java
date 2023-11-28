@@ -58,4 +58,41 @@ public class CommentController {
         commentService.save(comment);
         return "redirect:/dashboard/" + comment.getUser().getUsername();
     }
+
+
+    @GetMapping("/editcomment/{id}")
+    public String editcomment(@PathVariable("id") long id, Model m, Principal principal) {
+        Optional<Comment> usercomment = commentService.findForId(id);
+        if (usercomment.isPresent()) {
+            Comment comment = usercomment.get();
+            if (isPrincipalOwnerOfComment(principal, comment)) {
+                m.addAttribute("comment", usercomment);
+                return "edit_comment";
+            } else {
+                return "error";
+            }
+        } else {
+            return "error";
+        }
+    }
+
+    @GetMapping("/deletecomment/{id}")
+    public String deletecomment(@PathVariable("id") long id, Principal principal) {
+      Optional<Comment> usercomment = commentService.findForId(id);
+        if (usercomment.isPresent()) {
+            Comment comment = usercomment.get();
+            if (isPrincipalOwnerOfComment(principal, comment)) {
+                commentService.delete(comment);
+             return "redirect:/dashboard/" + comment.getUser().getUsername();
+            } else {
+                return "error";
+            }
+        } else {
+            return "error";
+        }
+    }
+
+    private boolean isPrincipalOwnerOfComment(Principal principal, Comment comment) {
+        return principal != null && principal.getName().equals(comment.getUser().getUsername());
+    }
 }
