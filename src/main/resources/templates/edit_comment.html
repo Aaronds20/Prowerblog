@@ -16,14 +16,11 @@
                         <h1 class="text-center">Edit the comment</h1>
                     </div>
                     <div class="card-body">
-                        <form autocomplete="off" action="#" th:action="@{/createcomment}" th:object="${comment}"
-                            method="post" class="form-horizontal" role="form">
-
-
+                        <form autocomplete="off" th:action="@{'/editcomment/' + ${comment.id}}" th:object="${comment}" method="post" class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label for="body">Body</label>
                                 <textarea class="form-control" id="body" aria-describedby="emailHelp"
-                                    placeholder="Write something here..." name="body"
+                                    placeholder="Write something here..." name="body" th:text="${comment.body}"
                                     th:classappend="${#fields.hasErrors('body')?'is-invalid':''}"></textarea>
                                 <div th:each="error : ${#fields.errors('body')}" class="invalid-feedback">
                                     <span th:text="${error}"></span>

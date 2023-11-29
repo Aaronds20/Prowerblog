@@ -66,7 +66,7 @@ public class CommentController {
         if (usercomment.isPresent()) {
             Comment comment = usercomment.get();
             if (isPrincipalOwnerOfComment(principal, comment)) {
-                m.addAttribute("comment", usercomment);
+                m.addAttribute("comment", comment);
                 return "edit_comment";
             } else {
                 return "error";
@@ -75,6 +75,28 @@ public class CommentController {
             return "error";
         }
     }
+
+    @PostMapping("/editcomment/{id}")
+public String updateComment(@PathVariable("id") long id, @Valid Comment comment, BindingResult result, Principal principal) {
+    if (result.hasErrors()) {
+        return "edit_comment";
+    }
+
+    Optional<Comment> usercomment = commentService.findForId(id);
+    if (usercomment.isPresent()) {
+        Comment existingComment = usercomment.get();
+        if (isPrincipalOwnerOfComment(principal, existingComment)) {
+            existingComment.setBody(comment.getBody());
+            commentService.save(existingComment);
+            return "redirect:/dashboard/" + existingComment.getUser().getUsername();
+        } else {
+            return "error";
+        }
+    } else {
+        return "error";
+    }
+}
+
 
     @GetMapping("/deletecomment/{id}")
     public String deletecomment(@PathVariable("id") long id, Principal principal) {

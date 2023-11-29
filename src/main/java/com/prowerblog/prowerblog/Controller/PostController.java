@@ -55,7 +55,7 @@ public class PostController {
         if (userpost.isPresent()) {
             Post post = userpost.get();
             if (isPrincipalOwnerOfPost(principal, post)) {
-                m.addAttribute("post", userpost);
+                m.addAttribute("post", post);
                 return "edit_postform";
             } else {
                 return "error";
@@ -64,6 +64,28 @@ public class PostController {
             return "error";
         }
     }
+
+    @PostMapping("/editpost/{id}")
+public String updatePost(@PathVariable("id") long id, @Valid Post post, BindingResult result, Principal principal) {
+    if (result.hasErrors()) {
+        return "edit_postform";
+    }
+
+    Optional<Post> userpost = postService.findForId(id);
+    if (userpost.isPresent()) {
+        Post existingPost = userpost.get();
+        if (isPrincipalOwnerOfPost(principal, existingPost)) {
+            existingPost.setTitle(post.getTitle());
+            existingPost.setBody(post.getBody());
+            postService.save(existingPost);
+            return "redirect:/dashboard/" + existingPost.getUser().getUsername();
+        } else {
+            return "error";
+        }
+    } else {
+        return "error";
+    }
+}
 
     @GetMapping("/deletepost/{id}")
     public String deletepost(@PathVariable("id") long id, Principal principal) {

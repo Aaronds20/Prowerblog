@@ -25,6 +25,7 @@ public class CommentService {
     }
 
     public void delete(Comment comment) {
+        commentRepository.delete(comment);
     }
 
     public List<Comment> findByUserOrderedByDate(User user) {

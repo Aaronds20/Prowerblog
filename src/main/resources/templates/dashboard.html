@@ -17,10 +17,10 @@
                         <img class="img-thumbnail" src="/assets/img/user.png" style="margin-right: 202px;" width="100" height="100" loading="lazy" />
                     </div>
                     <div class="col-lg-10" style="background: #bae0e0;">
-                        <h4 class="font-weight-bolder text-left text-secondary" style="margin-bottom: 0px;" th:text="${User.firstName} + ' ' + ${User.lastName}">Aaron Dsouza</h4>
-                        <h4 class="font-weight-bolder text-left text-secondary" style="margin-bottom: 0px;" th:text="${User.username}">Aaron Dsouza</h4>
-                        <h4 class="font-weight-bolder text-left text-secondary" style="margin-bottom: 0px;" th:text="${User.email}">Aaron Dsouza</h4>
-                    </div>
+                        <h4 class="font-weight-bolder text-left text-secondary" style="margin-bottom: 0px;" th:text="'Full Name: ' + ${User.firstName} + ' ' + ${User.lastName}">Aaron Dsouza</h4>
+                        <h4 class="font-weight-bolder text-left text-secondary" style="margin-bottom: 0px;" th:text="'Username: ' + ${User.username}">Aaron Dsouza</h4>
+                        <h4 class="font-weight-bolder text-left text-secondary" style="margin-bottom: 0px;" th:text="'Email: ' + ${User.email}">Aaron Dsouza</h4>
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                                         <td th:text="${posts.title}">Title</td>
                                         <td th:text="${#dates.format(posts.createDate, 'dd-MMM-yyyy')}">Date</td>
                                         <td>
-                                            <a th:href="@{'/deletepost/{id}'(id=${posts.id})}"><i class="fa-solid fa-trash-can" style="color: #f00f0f;"></i></a>
+                                            <a th:href="@{'/deletepost/{id}'(id=${posts.id})}" style="margin-right: 20px;"><i class="fa-solid fa-trash-can" style="color: #f00f0f;"></i></a>
                                             <a th:href="@{'/editpost/{id}'(id=${posts.id})}"><i class="fa-solid fa-pen-nib" style="color: #0f1ef0;"></i></a>
                                         </td> 
                                       </tr>
@@ -71,7 +71,7 @@
                                         <td th:text="${comments.body}">Title</td>
                                         <td th:text="${#dates.format(comments.createDate, 'dd-MMM-yyyy')}">Date</td>
                                         <td>
-                                            <a th:href="@{'/deletecomment/{id}'(id=${comments.id})}" style="margin-right: 10px;"><i class="fa-solid fa-trash-can" style="color: #f00f0f;"></i></a>
+                                            <a th:href="@{'/deletecomment/{id}'(id=${comments.id})}" style="margin-right: 20px;"><i class="fa-solid fa-trash-can" style="color: #f00f0f;"></i></a>
                                             <a th:href="@{'/editcomment/{id}'(id=${comments.id})}"><i class="fa-solid fa-pen-nib" style="color: #0f1ef0;"></i></a>
                                         </td>                                        
                                       </tr>
