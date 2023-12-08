@@ -3,6 +3,29 @@
 
 <head>
     <div th:replace="~{fragments/header :: header_css}"></div>
+    <script src="https://cdn.tiny.cloud/1/dpi98b8wb7st2vyo6cq82o2fpnj93ppfwhhqvm0jsc1bjudm/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+    selector: 'textarea#editor',
+    plugins: 'lists, link, image, media',
+    toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+    menubar: false,
+    setup: (editor) => {
+        // Apply the focus effect
+        editor.on("init", () => {
+        editor.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+          });
+        editor.on("focus", () => { (editor.getContainer().style.boxShadow = "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+        (editor.getContainer().style.borderColor = "#80bdff");
+          });
+        editor.on("blur", () => {
+        (editor.getContainer().style.boxShadow = ""),
+        (editor.getContainer().style.borderColor = "");
+         });
+       },
+    });
+  </script>
 </head>
 
 <body>
@@ -32,7 +55,7 @@
 
                             <div class="form-group">
                                 <label for="body">Content</label>
-                                <textarea class="form-control" id="body" aria-describedby="emailHelp"
+                                <textarea class="form-control" id="editor" aria-describedby="emailHelp"
                                     placeholder="Enter Content for post" name="body"
                                     th:classappend="${#fields.hasErrors('body')?'is-invalid':''}"></textarea>
                                 <div th:each="error : ${#fields.errors('body')}" class="invalid-feedback">
@@ -52,8 +75,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- /.container -->
+    </div>
+    <br>
         <div th:replace="~{fragments/footer :: footer}"></div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
