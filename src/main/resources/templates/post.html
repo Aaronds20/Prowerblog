@@ -36,6 +36,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
                     <div th:utext="${fullpost.body}">
                         Body
                     </div>
+                    <br>
                 <div class="row" style="text-align: right;" sec:authorize="isAuthenticated()">
                     <div class="col">
                     <a th:href="@{'/comment/{id}'(id=${fullpost.id})}" class="col-md-2 ml-auto">

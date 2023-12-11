@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.prowerblog.prowerblog.Model.Post;
@@ -41,5 +44,13 @@ public class PostService {
     public List<Post> findByUserOrderedByDate(User user){
          List<Post> posts = postRepository.findByUserOrderByCreateDateDesc(user);
          return posts;
+    }
+    
+    public Page<Post> findAllOrderedByDatePageable(int page) {
+    return postRepository.findAll(PageRequest.of(subtractPageByOne(page), 4, Sort.by(Sort.Direction.DESC, "createDate")));
+}
+
+    private int subtractPageByOne(int page){
+        return (page < 1) ? 0 : page - 1;
     }
 }

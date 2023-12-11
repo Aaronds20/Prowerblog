@@ -22,7 +22,7 @@
     <h1 style="color: var(--green);font-size: 40px;text-decoration: underline; font-style: italic; padding-left: 20px;">Recent Articles</h1>
     <br>
     <div class="container">
-        <div class="row" th:each="posts : ${Posts}">
+        <div class="row" th:each="posts : ${pager.posts}">
             <div class="col-md-10 col-lg-8" data-bss-hover-animate="pulse">
                 <div class="post-preview">
                     <h2 class="post-title" th:text="${posts.title}">Title</h2>
@@ -40,6 +40,7 @@
     </div>
     </div>
     <br>
+    <div th:replace="/fragments/pagination :: pagination(URLparameter='/')"></div>
     <div th:replace="~{fragments/footer :: footer}"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
