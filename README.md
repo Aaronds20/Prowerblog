@@ -1,6 +1,5 @@
 # ProwerBlog - A Blogging Website
 
-## Introduction
 ProwerBlog is a blog project developed using Spring Boot and Thymeleaf. It includes various functionalities such as login and registration, user-specific dashboards, and paginated blog posts. The project leverages multiple Spring modules along with Bootstrap for the frontend and MySQL for the database.
 
 ## Technologies Used
