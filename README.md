@@ -95,6 +95,8 @@ We welcome contributions! Please follow these steps:
 
 - For any questions or feedback, please contact us at aarondsouza04020@gmail.com.
 
+## Images
+
 ![Web capture_11-12-2023_214625_localhost](https://github.com/Aaronds20/prowerblog/assets/105139489/db002a42-7237-4408-9934-032774663b46)
 
 
